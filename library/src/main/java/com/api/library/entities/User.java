@@ -18,6 +18,7 @@ public class User {
 
     @Column(unique = true)
     private String cpf;
+    private Boolean availableToGetBook = true;
 
     public UUID getId() {
         return id;
@@ -49,5 +50,13 @@ public class User {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public Boolean getAvailableToGetBook() {
+        return availableToGetBook;
+    }
+
+    public void setAvailableToGetBook(Boolean availableToGetBook) {
+        this.availableToGetBook = availableToGetBook;
     }
 }
