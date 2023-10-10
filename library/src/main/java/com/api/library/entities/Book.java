@@ -15,6 +15,7 @@ public class Book {
     private String name;
     private String autor;
     private String publisher;
+    private Boolean available = true;
 
     public UUID getId() {
         return id;
@@ -46,5 +47,13 @@ public class Book {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 }
