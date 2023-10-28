@@ -16,6 +16,9 @@ public class Person extends EntityID{
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "cpf", unique = true, nullable = false)
+    private String documentCPF;
+
     @Column(name = "telefone", unique = true, nullable = false)
     private String phoneNumber;
 
