@@ -1,6 +1,8 @@
 package com.api.library.services;
 
 
+import com.api.library.dtos.AdministratorRecordDTO;
+import com.api.library.entities.Administrator;
 import com.api.library.entities.Book;
 import com.api.library.entities.User;
 import com.api.library.repositories.AdministratorRepository;
@@ -13,26 +15,10 @@ import org.springframework.stereotype.Service;
 public class AdministratorService {
 
     @Autowired
-    UserRepository userRepository;
+    private AdministratorRepository administratorRepository;
 
-    @Autowired
-    AdministratorRepository administratorRepository;
-
-    @Autowired
-    BookRepository bookRepository;
-
-    public void lendBook(String userName, String admName, String bookName) throws Exception{
-
-        var book = new Book();
-        var user = new User();
-        if (book.getAvailable() && user.getAvailableToGetBook()){
-            userRepository.findByName(userName);
-            administratorRepository.findByName(admName);
-            bookRepository.findByName(bookName);
-            book.setAvailable(false);
-        } else if(!book.getAvailable() && user.getAvailableToGetBook()){
-
-        }
+    public Administrator saveNewAdm (Administrator administrator){
+        return administratorRepository.save(administrator);
     }
 
 }
