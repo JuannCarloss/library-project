@@ -1,59 +1,27 @@
 package com.api.library.entities;
 
+import com.api.library.enums.Availability;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
-@Entity
-@Table(name = "books")
-public class Book {
+@Entity(name = "books")
+@Getter
+@Setter
+public class Book  extends EntityID{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
+    @Column(name = "nome", nullable = false)
     private String name;
+    @Column(name = "autor", nullable = false)
     private String autor;
+    @Column(name = "editora", nullable = false)
     private String publisher;
-    private Boolean available = true;
+    @Column(name = "disponibilidade", nullable = false)
+    private Availability availability;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAutor() {
-        return autor;
-    }
-
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
+    public Book(){
+        this.availability = Availability.AVAILABLE;
     }
 }
