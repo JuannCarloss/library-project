@@ -1,59 +1,31 @@
 package com.api.library.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "loans")
-public class LoanBooks {
+@Entity(name = "loans")
+@Getter
+@Setter
+public class LoanBooks extends EntityID {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @Column(name = "DataEmprestimo", nullable = false)
+    private LocalDateTime loanDate;
+    @Column(name = "DataDevolucao")
+    private LocalDateTime devolutionDate;
 
-    private String user;
-    private String adm;
-    private String bookName;
-    private String bookBarcode;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    public UUID getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "administrator_id", referencedColumnName = "id")
+    private Administrator adm;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private Book book;
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getAdm() {
-        return adm;
-    }
-
-    public void setAdm(String adm) {
-        this.adm = adm;
-    }
-
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
-
-    public String getBookBarcode() {
-        return bookBarcode;
-    }
-
-    public void setBookBarcode(String bookBarcode) {
-        this.bookBarcode = bookBarcode;
-    }
 }
