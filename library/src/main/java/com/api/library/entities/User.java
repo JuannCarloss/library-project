@@ -1,62 +1,20 @@
 package com.api.library.entities;
 
+import com.api.library.enums.Availability;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.Serializable;
-import java.util.UUID;
+@Entity(name = "users")
+@Getter
+@Setter
+public class User extends Person {
 
-@Entity
-@Table(name = "users")
-public class User {
+    @Column(name = "disponibilidade", nullable = false)
+    private Availability availability;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
-    private String name;
-    private String email;
-
-    @Column(unique = true)
-    private String cpf;
-    private Boolean availableToGetBook = true;
-
-    public UUID getId() {
-        return id;
+    public User(){
+        this.availability = Availability.AVAILABLE;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public Boolean getAvailableToGetBook() {
-        return availableToGetBook;
-    }
-
-    public void setAvailableToGetBook(Boolean availableToGetBook) {
-        this.availableToGetBook = availableToGetBook;
-    }
 }
