@@ -1,19 +1,17 @@
 package com.api.library.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
-@Entity
-@Table(name = "administrators")
-public class Administrator {
+@Entity(name = "administrators")
+@Getter
+@Setter
+public class Administrator extends Person{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
-    private String name;
-    private String email;
-    private String cpf;
+    @Column(name = "codigo_contratacao", unique = true, nullable = false)
+    private String hiringCode;
 
 }
