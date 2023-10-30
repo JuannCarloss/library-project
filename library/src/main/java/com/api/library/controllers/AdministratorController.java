@@ -25,6 +25,7 @@ public class AdministratorController {
     public ResponseEntity<Administrator> saveNewAdm(@RequestBody @Valid AdministratorRecordDTO administratorRecordDTO){
         var adm = new Administrator();
         BeanUtils.copyProperties(administratorRecordDTO, adm);
-        return ResponseEntity.status(HttpStatus.CREATED).body(administratorService.saveNewAdm(adm));
+        Administrator save = administratorService.saveNewAdm(adm);
+        return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
 }
