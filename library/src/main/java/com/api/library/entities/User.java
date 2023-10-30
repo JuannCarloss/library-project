@@ -11,6 +11,7 @@ import lombok.Setter;
 public class User extends Person {
 
     @Column(name = "disponibilidade", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Availability availability;
 
     public User(){
