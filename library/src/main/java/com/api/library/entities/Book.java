@@ -19,6 +19,7 @@ public class Book  extends EntityID{
     @Column(name = "editora", nullable = false)
     private String publisher;
     @Column(name = "disponibilidade", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Availability availability;
 
     public Book(){
