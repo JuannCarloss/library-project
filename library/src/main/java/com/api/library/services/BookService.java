@@ -25,6 +25,8 @@ public class BookService {
             if (book.getAvailability() == Availability.AVAILABLE){
                 book.setAvailability(Availability.UNAVAILABLE);
                 bookRepository.save(book);
+            }else {
+                throw new Exception("Livro não está disponível para empréstimo!");
             }
             }else {
             throw new Exception("livro não existe no banco de dados");
