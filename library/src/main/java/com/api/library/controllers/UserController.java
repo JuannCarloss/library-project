@@ -1,6 +1,7 @@
 package com.api.library.controllers;
 
 import com.api.library.dtos.UserRecordDTO;
+import com.api.library.entities.LoanBooks;
 import com.api.library.entities.User;
 import com.api.library.repositories.UserRepository;
 import com.api.library.services.UserService;
@@ -27,6 +28,11 @@ public class UserController {
         BeanUtils.copyProperties(userRecordDTO, user);
         User save = userService.saveNewUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
+    }
+
+    @PutMapping("/devolution/{id}")
+    public ResponseEntity<LoanBooks> returnBook (@PathVariable Long id) throws Exception {
+           return ResponseEntity.status(HttpStatus.OK).body(userService.returnBook(id));
     }
 
 }
