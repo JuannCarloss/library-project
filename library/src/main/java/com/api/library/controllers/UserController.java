@@ -23,15 +23,27 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<User> saveUser(@RequestBody @Valid UserRecordDTO userRecordDTO){
+    public ResponseEntity saveUser(@RequestBody @Valid UserRecordDTO userRecordDTO){
         var user = new User();
         BeanUtils.copyProperties(userRecordDTO, user);
         User save = userService.saveNewUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
 
+    @GetMapping
+    public ResponseEntity findAllUsers(){
+        List<User> users = userService.listAllUsers();
+        return ResponseEntity.ok().body(users);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity userById(@PathVariable("id") Long id){
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
+    }
+
     @PutMapping("/devolution/{id}")
-    public ResponseEntity<LoanBooks> returnBook (@PathVariable Long id) throws Exception {
+    public ResponseEntity returnBook (@PathVariable Long id) throws Exception {
            return ResponseEntity.status(HttpStatus.OK).body(userService.returnBook(id));
     }
 

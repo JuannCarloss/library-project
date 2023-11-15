@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,10 +21,23 @@ public class UserService {
     @Autowired
     private LoanBooksRepository loanBooksRepository;
 
-
-
     public User saveNewUser(User user){
         return userRepository.save(user);
+    }
+
+    public List<User> listAllUsers(){
+        return userRepository.findAll();
+    }
+
+    public User getUserById(Long id){
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public User updateUser(Long id, User user){
+        Optional<User> optional = userRepository.findById(id);
+        if (optional.isPresent()){
+
+        }
     }
 
     public void updateStatus(Long id) throws Exception{
@@ -36,11 +50,6 @@ public class UserService {
             }else {
                 throw new Exception("Usuário não está disponível para realizar empréstimo!");
                 }
-
-//            if (user.getAvailability() == Availability.UNAVAILABLE) {
-//                user.setAvailability(Availability.AVAILABLE);
-//                userRepository.save(user);
-//            }
             } else {
             throw new Exception("usuário não existe na base de dados!");
         }
