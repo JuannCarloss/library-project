@@ -28,4 +28,8 @@ public class LoanBooks extends EntityID {
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private Book book;
 
+    public LoanBooks(){
+        this.loanDate = LocalDateTime.now();
+    }
+
 }
