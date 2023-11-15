@@ -3,7 +3,6 @@ package com.api.library.services;
 import com.api.library.entities.LoanBooks;
 import com.api.library.entities.User;
 import com.api.library.enums.Availability;
-import com.api.library.repositories.BookRepository;
 import com.api.library.repositories.LoanBooksRepository;
 import com.api.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +27,20 @@ public class UserService {
     }
 
     public void updateStatus(Long id) throws Exception{
-        Optional<User> user0 = userRepository.findById(id);
-        if (user0.isPresent()) {
-            var user = user0.get();
+        Optional<User> optional = userRepository.findById(id);
+        if (optional.isPresent()) {
+            var user = optional.get();
             if (user.getAvailability() == Availability.AVAILABLE){
                 user.setAvailability(Availability.UNAVAILABLE);
                 userRepository.save(user);
             }else {
                 throw new Exception("Usuário não está disponível para realizar empréstimo!");
                 }
+
+//            if (user.getAvailability() == Availability.UNAVAILABLE) {
+//                user.setAvailability(Availability.AVAILABLE);
+//                userRepository.save(user);
+//            }
             } else {
             throw new Exception("usuário não existe na base de dados!");
         }

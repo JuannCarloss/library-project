@@ -19,9 +19,9 @@ public class BookService {
     }
 
     public void updateStatus(Long id) throws Exception{
-        Optional<Book> book0 = bookRepository.findById(id);
-        if (book0.isPresent()) {
-            var book = book0.get();
+        Optional<Book> optional = bookRepository.findById(id);
+        if (optional.isPresent()) {
+            var book = optional.get();
             if (book.getAvailability() == Availability.AVAILABLE){
                 book.setAvailability(Availability.UNAVAILABLE);
                 bookRepository.save(book);
