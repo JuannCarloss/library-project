@@ -6,6 +6,7 @@ import com.api.library.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,30 @@ public class BookService {
 
     public Book saveNewBook(Book book){
         return bookRepository.save(book);
+    }
+
+    public List<Book> findAllBooks(){
+        return bookRepository.findAll();
+    }
+
+    public Book findBookById(Long id){
+        return bookRepository.findById(id).orElse(null);
+    }
+
+    public Book updateBook(Long id, Book changed){
+        Optional<Book> optional = bookRepository.findById(id);
+        if (optional.isPresent()){
+            var book = optional.get();
+            book.setName(changed.getName());
+            book.setAutor(changed.getAutor());
+            book.setPublisher(changed.getPublisher());
+            return bookRepository.save(book);
+        }
+        return null;
+    }
+
+    public void deleteBook(Long id){
+        bookRepository.deleteById(id);
     }
 
     public void updateStatus(Long id) throws Exception{
