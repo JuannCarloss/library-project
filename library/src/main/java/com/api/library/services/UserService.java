@@ -33,11 +33,21 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User updateUser(Long id, User user){
+    public User updateUser(Long id, User changed){
         Optional<User> optional = userRepository.findById(id);
         if (optional.isPresent()){
-
+            var user = optional.get();
+            user.setName(changed.getName());
+            user.setEmail(changed.getEmail());
+            user.setDocumentCPF(changed.getDocumentCPF());
+            user.setPhoneNumber(changed.getPhoneNumber());
+            return userRepository.save(user);
         }
+        return null;
+    }
+
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
     }
 
     public void updateStatus(Long id) throws Exception{
@@ -59,7 +69,8 @@ public class UserService {
         Optional<LoanBooks> optional = loanBooksRepository.findById(loanID);
             if (optional.isPresent()){
                 var loan = optional.get();
-                if (loan.getUser().getAvailability() == Availability.UNAVAILABLE && loan.getBook().getAvailability() == Availability.UNAVAILABLE) {
+                if (loan.getUser().getAvailability() == Availability.UNAVAILABLE &&
+                    loan.getBook().getAvailability() == Availability.UNAVAILABLE) {
                     loan.getUser().setAvailability(Availability.AVAILABLE);
                     loan.getBook().setAvailability(Availability.AVAILABLE);
                     loan.setDevolutionDate(LocalDateTime.now());

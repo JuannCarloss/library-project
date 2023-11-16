@@ -43,8 +43,20 @@ public class UserController {
     }
 
     @PutMapping("/devolution/{id}")
-    public ResponseEntity returnBook (@PathVariable Long id) throws Exception {
-           return ResponseEntity.status(HttpStatus.OK).body(userService.returnBook(id));
+    public ResponseEntity returnBook(@PathVariable Long id) throws Exception {
+           return ResponseEntity.ok().body(userService.returnBook(id));
+    }
+
+    @PutMapping("/alterar/{id}")
+    public ResponseEntity alterUser(@PathVariable("id") Long id, @RequestBody User user){
+        User update = userService.updateUser(id, user);
+        return ResponseEntity.ok().body(update);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteUser(@PathVariable("id") Long id){
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
