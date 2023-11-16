@@ -27,7 +27,7 @@ public class BookService {
         return bookRepository.findById(id).orElse(null);
     }
 
-    public Book updateBook(Long id, Book changed){
+    public Book updateBook(Long id, Book changed) throws Exception{
         Optional<Book> optional = bookRepository.findById(id);
         if (optional.isPresent()){
             var book = optional.get();
@@ -35,8 +35,10 @@ public class BookService {
             book.setAutor(changed.getAutor());
             book.setPublisher(changed.getPublisher());
             return bookRepository.save(book);
+        }else {
+            throw new Exception("Livro não existe na base de dados!");
         }
-        return null;
+
     }
 
     public void deleteBook(Long id){

@@ -33,7 +33,7 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User updateUser(Long id, User changed){
+    public User updateUser(Long id, User changed) throws Exception{
         Optional<User> optional = userRepository.findById(id);
         if (optional.isPresent()){
             var user = optional.get();
@@ -42,8 +42,9 @@ public class UserService {
             user.setDocumentCPF(changed.getDocumentCPF());
             user.setPhoneNumber(changed.getPhoneNumber());
             return userRepository.save(user);
+        }else{
+            throw new Exception("Usuario não existe na base de dados!");
         }
-        return null;
     }
 
     public void deleteUser(Long id){
