@@ -41,8 +41,9 @@ public class AdministratorService {
             administrator.setEmail(changed.getEmail());
             administrator.setPhoneNumber(changed.getPhoneNumber());
             return administratorRepository.save(administrator);
+        }else {
+            throw new Exception("Administrador não existe na base de dados!");
         }
-        throw new Exception("Administrador não existe na base de dados!");
     }
 
     public void deleteAdministrator(Long id){
