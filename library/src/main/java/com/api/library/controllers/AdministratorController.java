@@ -21,11 +21,6 @@ public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;
 
-    @Autowired
-    private LoanBooksService loanBooksService;
-
-
-    //administrators http verbs
     @PostMapping
     public ResponseEntity saveNewAdm(@RequestBody @Valid AdministratorRecordDTO administratorRecordDTO){
         var adm = new Administrator();
@@ -53,34 +48,6 @@ public class AdministratorController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteAdministrators(@PathVariable("id") Long id){
         administratorService.deleteAdministrator(id);
-        return ResponseEntity.noContent().build();
-    }
-    //---------------------------------------------
-
-
-
-    //loans http verbs
-    @PostMapping("/loans")
-    public ResponseEntity saveNewLoan(@RequestBody @Valid LoanBooks loanBooks) throws Exception {
-        LoanBooks save = loanBooksService.saveNewLoan(loanBooks);
-        return ResponseEntity.status(HttpStatus.CREATED).body(save);
-    }
-
-    @GetMapping("/loans")
-    public ResponseEntity findAllLoans(){
-        List<LoanBooks> loans = loanBooksService.findAllLoans();
-        return ResponseEntity.ok(loans);
-    }
-
-    @GetMapping("/loans/{id}")
-    public ResponseEntity findLoanById(@PathVariable("id") Long id){
-        LoanBooks loan = loanBooksService.findLoanById(id);
-        return ResponseEntity.ok(loan);
-    }
-
-    @DeleteMapping("/loans/delete/{id}")
-    public ResponseEntity deleteLoan(@PathVariable("id")Long id){
-        loanBooksService.deleteLoan(id);
         return ResponseEntity.noContent().build();
     }
 }
