@@ -1,5 +1,6 @@
 package com.api.library.services;
 
+import com.api.library.enterprise.ValidationException;
 import com.api.library.entities.LoanBooks;
 import com.api.library.entities.User;
 import com.api.library.enums.Availability;
@@ -33,7 +34,7 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User updateUser(Long id, User changed) throws Exception{
+    public User updateUser(Long id, User changed){
         Optional<User> optional = userRepository.findById(id);
         if (optional.isPresent()){
             var user = optional.get();
@@ -43,7 +44,7 @@ public class UserService {
             user.setPhoneNumber(changed.getPhoneNumber());
             return userRepository.save(user);
         }else{
-            throw new Exception("Usuario não existe na base de dados!");
+            throw new ValidationException("Usuario não existe na base de dados!");
         }
     }
 
@@ -51,22 +52,21 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void updateStatus(Long id) throws Exception{
+    public void updateStatus(Long id){
         Optional<User> optional = userRepository.findById(id);
         if (optional.isPresent()) {
             var user = optional.get();
             if (user.getAvailability() == Availability.AVAILABLE){
                 user.setAvailability(Availability.UNAVAILABLE);
                 userRepository.save(user);
-            }else {
-                throw new Exception("Usuário não está disponível para realizar empréstimo!");
-                }
+            }
+
             } else {
-            throw new Exception("usuário não existe na base de dados!");
+            throw new ValidationException("usuário não existe na base de dados!");
         }
     }
 
-    public LoanBooks returnBook(Long loanID)throws Exception{
+    public LoanBooks returnBook(Long loanID){
         Optional<LoanBooks> optional = loanBooksRepository.findById(loanID);
             if (optional.isPresent()){
                 var loan = optional.get();
@@ -77,10 +77,10 @@ public class UserService {
                     loan.setDevolutionDate(LocalDateTime.now());
                     return loanBooksRepository.save(loan);
                 }else{
-                    throw new Exception("Usuário não tem nenhum livro emprestado!");
+                    throw new ValidationException("Usuário não tem nenhum livro emprestado!");
                 }
             }else {
-                throw new Exception("Empréstimo não cadastrado na base de dados!");
+                throw new ValidationException("Empréstimo não cadastrado na base de dados!");
             }
     }
 }

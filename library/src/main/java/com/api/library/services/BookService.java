@@ -1,5 +1,6 @@
 package com.api.library.services;
 
+import com.api.library.enterprise.ValidationException;
 import com.api.library.entities.Book;
 import com.api.library.enums.Availability;
 import com.api.library.repositories.BookRepository;
@@ -27,7 +28,7 @@ public class BookService {
         return bookRepository.findById(id).orElse(null);
     }
 
-    public Book updateBook(Long id, Book changed) throws Exception{
+    public Book updateBook(Long id, Book changed){
         Optional<Book> optional = bookRepository.findById(id);
         if (optional.isPresent()){
             var book = optional.get();
@@ -36,7 +37,7 @@ public class BookService {
             book.setPublisher(changed.getPublisher());
             return bookRepository.save(book);
         }else {
-            throw new Exception("Livro não existe na base de dados!");
+            throw new ValidationException("Livro não existe na base de dados!");
         }
 
     }
@@ -45,18 +46,17 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public void updateStatus(Long id) throws Exception{
+    public void updateStatus(Long id){
         Optional<Book> optional = bookRepository.findById(id);
         if (optional.isPresent()) {
             var book = optional.get();
             if (book.getAvailability() == Availability.AVAILABLE){
                 book.setAvailability(Availability.UNAVAILABLE);
                 bookRepository.save(book);
-            }else {
-                throw new Exception("Livro não está disponível para empréstimo!");
             }
+
             }else {
-            throw new Exception("livro não existe no banco de dados");
+            throw new ValidationException("livro não existe no banco de dados");
         }
 
     }
