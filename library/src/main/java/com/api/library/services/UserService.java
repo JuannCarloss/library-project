@@ -23,6 +23,19 @@ public class UserService {
     private LoanBooksRepository loanBooksRepository;
 
     public User saveNewUser(User user){
+
+        if (userRepository.findByPhoneNumber(user.getPhoneNumber()) != null){
+            throw new ValidationException("Telefone ja cadastrado na abse de dados!");
+        }
+
+        if (userRepository.findByEmail(user.getEmail()) != null){
+            throw new ValidationException("Email ja cadastrado na base de dados!");
+        }
+
+        if (userRepository.findByDocumentCpf(user.getDocumentCPF()) != null){
+            throw new ValidationException("CPF ja cadastrado na base de dados!");
+        }
+
         return userRepository.save(user);
     }
 
