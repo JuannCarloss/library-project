@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
-    void findByName(String name);
-    void findByHiringCode(String hiringCode);
-    void findByDocumentCPF(String documentCPF);
+    Administrator findByHiringCode(String hiringCode);
+    Administrator findByDocumentCPF(String documentCPF);
+    Administrator findByPhoneNumber(String phoneNumber);
+    Administrator findByEmail(String email);
 }
