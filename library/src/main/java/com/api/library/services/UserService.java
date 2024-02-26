@@ -22,20 +22,22 @@ public class UserService {
     @Autowired
     private LoanBooksRepository loanBooksRepository;
 
-    public User saveNewUser(User user){
-
+    public void validateEntries(User user){
         if (userRepository.findByPhoneNumber(user.getPhoneNumber()) != null){
-            throw new ValidationException("Telefone ja cadastrado na abse de dados!");
+            throw new ValidationException("Telefone inválido ou ja cadastrado na abse de dados!");
         }
 
         if (userRepository.findByEmail(user.getEmail()) != null){
-            throw new ValidationException("Email ja cadastrado na base de dados!");
+            throw new ValidationException("Email inválido ou ja cadastrado na base de dados!");
         }
 
         if (userRepository.findByDocumentCpf(user.getDocumentCPF()) != null){
-            throw new ValidationException("CPF ja cadastrado na base de dados!");
+            throw new ValidationException("CPF inválido!");
         }
+    }
 
+    public User saveNewUser(User user){
+        validateEntries(user);
         return userRepository.save(user);
     }
 
@@ -51,6 +53,7 @@ public class UserService {
         Optional<User> optional = userRepository.findById(id);
         if (optional.isPresent()){
             var user = optional.get();
+            validateEntries(user);
             user.setName(changed.getName());
             user.setEmail(changed.getEmail());
             user.setDocumentCPF(changed.getDocumentCPF());
