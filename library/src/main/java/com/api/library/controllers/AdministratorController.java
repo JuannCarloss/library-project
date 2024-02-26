@@ -1,12 +1,7 @@
 package com.api.library.controllers;
 
-import com.api.library.dtos.AdministratorRecordDTO;
 import com.api.library.entities.Administrator;
-import com.api.library.entities.LoanBooks;
 import com.api.library.services.AdministratorService;
-import com.api.library.services.LoanBooksService;
-import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/administrators")
+@RequestMapping("/api/administrators")
 public class AdministratorController {
 
     @Autowired
     private AdministratorService administratorService;
 
     @PostMapping
-    public ResponseEntity saveNewAdm(@RequestBody @Valid AdministratorRecordDTO administratorRecordDTO){
-        var adm = new Administrator();
-        BeanUtils.copyProperties(administratorRecordDTO, adm);
-        Administrator save = administratorService.saveNewAdm(adm);
+    public ResponseEntity saveNewAdm(@RequestBody Administrator administrator){
+        Administrator save = administratorService.saveNewAdm(administrator);
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
     @GetMapping
